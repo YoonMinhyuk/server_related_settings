@@ -76,3 +76,17 @@ vi config
 # permission 설정 - 파일 소유자만이 설정 파일을 읽을 수 있게 함. 위의 권장 설정 사용 가능
 chmod 440 ~/.ssh/config
 ```
+
+## Port 변경
+```shell
+semanage port -a -t ssh_port_t -p tcp [port]
+firewall-cmd --permanent --zone=[zone_name] --add-port=[port]/tcp
+firewall-cmd reload
+
+vi /etc/ssh/sshd_config
+# Port 22 -> Port [원하는 Port] 로 수정
+# vi 종료
+systemctl restart sshd
+
+# 현재 세션 종료하지 않고 ssh 다시 접속해보기
+```
